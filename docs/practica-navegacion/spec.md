@@ -1,6 +1,6 @@
 # Spec: práctica de navegación — 7 al 14/10/2026
 
-Estado: Borrador
+Estado: Aprobada
 Repositorio: https://github.com/NicolasAlcaraz-Git/Practica-14-10.git
 Commit inicial: 5b46f16f32594db0a47bcca0aa2300025195154d
 Variante elegida: C
@@ -14,7 +14,9 @@ Rutas relevantes:
 - Pruebas: tests/navigation/search.test.ts, tests/navigation/pathFollower.test.ts; consumidor de percepción en tests/application/perceptionSimulation.test.ts
 Comandos confirmados:
 - Validación completa: npm run validate (typecheck + test:run + build; package.json:16)
-- Prueba enfocada: npm run test:run -- tests/navigation/search.test.ts
+- Prueba enfocada: npm run test:run -- tests/navigation/search.test.ts (y tests/application/ tras incremento 2)
+Consumidor confirmado (Paso 3): src/application/simulation/navigationDemo.ts → calculateRoute; GameScene fuera de la escritura; conexión demostrada por prueba de integración.
+Inaccesible = SearchStatus "unreachable" (contrato existente). Inicio=meta = success con path [START] y totalCost 0 (contrato existente).
 
 ## Objetivo
 Comparar navegación y verificar una única mejora con un caso normal y uno

@@ -18,8 +18,8 @@ Línea base: [PENDIENTE — Paso 4]
 
 Contraste de exploración (Paso 1): en esta copia no existe src/domain/behavior/ (FSM = H4 según README); no se reconstruyó ni se supone su ausencia relevante porque la FSM queda fuera de alcance. LAB_MAP es inmutable y no hay evento de cambio de mapa: el consumidor recalcula sólo ante clic o cambio de algoritmo (GameScene.ts:166). Comandos documentados en package.json:16 (validate) y scripts test/test:run; no se ejecutaron en el Paso 1 por ser sólo lectura.
 
-Contraste y decisión humana: [PENDIENTE — Paso 3]
-Spec/plan aprobados: [PENDIENTE — Pasos 3 y 5]
+Contraste y decisión humana: se propuso notificar cambios de mapa y exponer "inaccesible" como capacidades nuevas, pero `calculateRoute` ya acepta el mapa como configuración y el contrato ya distingue `unreachable`; decisión humana (14/10, Paso 3): consumidor = `src/application/simulation/navigationDemo.ts` → `calculateRoute`, reglas de invalidación en dominio puro, coordinación con evento explícito en aplicación, `GameScene` sin cambios, sin dependencias nuevas ni UI.
+Spec/plan aprobados: spec Aprobada el Paso 3 (14/10); plan pendiente (Paso 5).
 
 ## Comparación común — fixture libre 5x3
 Vecinos y desempate reales: [PENDIENTE — Paso 4]
@@ -44,7 +44,7 @@ Dijkstra: [COSTOS COMPLETADOS, RUTA Y CONCLUSIÓN].
 | BASE-AC6 | [URL, VERSIÓN Y TRES DOCUMENTOS] | [RESULTADO] | [ESTADO] |
 
 ## Registro mínimo de intervención
-Prompts: [PASOS/VARIANTE DE ESTA GUÍA USADOS Y CAMBIOS RELEVANTES].
+Prompts: guía PASOS.md, variante C. Paso 1 (exploración read-only) y prompt orientativo de inicio C (Paso 3) ejecutados; aprobación humana del consumidor registrada arriba. Pendientes: prompt Paso 4 (línea base), Paso 5 (plan), Pasos 6-8.
 Decisión tras incremento 1: [ACEPTAR/CORREGIR Y MOTIVO].
 Decisión tras incremento 2: [ACEPTAR/CORREGIR Y MOTIVO].
 Validación final: [COMANDO Y RESULTADO REAL].
