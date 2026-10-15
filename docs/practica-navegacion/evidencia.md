@@ -45,7 +45,7 @@ Dijkstra: Extraer S=0 descubre A=1, B=3. Extraer A=1 descubre G=1+9=**10**. Extr
 | BASE-AC6 | [URL, VERSIÓN Y TRES DOCUMENTOS] | [RESULTADO] | [ESTADO] |
 
 ## Registro mínimo de intervención
-Prompts: guía PASOS.md, variante C. Pasos 1-5 ejecutados (exploración, spec+anexo C, aprobación del consumidor, línea base BASE-01..04 con fixtureBase.test.ts en abe0b4b, plan aprobado). Pendientes: Pasos 6-8 (implementar incrementos 1-3).
+Prompts: guía PASOS.md, variante C. Pasos 1-5 ejecutados (exploración, spec+anexo C, aprobación del consumidor, línea base BASE-01..04 con fixtureBase.test.ts en abe0b4b, plan aprobado). Incremento 1 implementado: `npm run test:run -- tests/navigation/routeInvalidation.test.ts` → 8/8 OK; `npm run validate` → typecheck + 58 tests + build OK (14/10). Archivos: src/domain/navigation/routeInvalidation.ts (nuevo, dominio puro sin Phaser/DOM), tests/navigation/routeInvalidation.test.ts (nuevo). Sin dependencias, sin cambios de implementación previa. Pendientes: aceptación humana del inc1, Pasos 6-8 (inc2 sesión en navigationDemo, inc3 cierre).
 Decisión tras incremento 1: [ACEPTAR/CORREGIR Y MOTIVO].
 Decisión tras incremento 2: [ACEPTAR/CORREGIR Y MOTIVO].
 Validación final: [COMANDO Y RESULTADO REAL].
