@@ -5,8 +5,8 @@ Commit de implementación: [PENDIENTE]
 Versión de entrega: commit final informado por el estudiante en la plataforma.
 Variante: C
 Herramienta/modelo o trabajo manual: OpenCode — opencode/mimo-v2.6-flash-free
-Cambios previos: PASOS.md y PRACTICA.md sin versionar; ningún cambio de código.
-Línea base: [PENDIENTE — Paso 4]
+Cambios previos: commits 271d00a (Paso 1), 1646ec8 (Paso 2), d6d6b90 (Paso 3 — spec/plan/evidencia); árbol limpio antes del Paso 4. Cambios del Paso 4: tests/navigation/fixtureBase.test.ts (nuevo) y esta evidencia; ningún cambio de implementación.
+Línea base: `npm run validate` en d6d6b90 antes de agregar pruebas → typecheck OK, 39 tests OK, build OK (warning de chunk >500 kB de Phaser preexistente, no es regresión). Repetido tras agregar fixtureBase.test.ts → 50 tests OK. Foco: `npm run test:run -- tests/navigation/fixtureBase.test.ts` → 11/11 OK.
 
 ## Exploración mínima
 | Capa | Ruta/símbolo | Capacidad comprobada |
@@ -22,21 +22,22 @@ Contraste y decisión humana: se propuso notificar cambios de mapa y exponer "in
 Spec/plan aprobados: spec Aprobada el Paso 3 (14/10); plan pendiente (Paso 5).
 
 ## Comparación común — fixture libre 5x3
-Vecinos y desempate reales: [PENDIENTE — Paso 4]
+Vecinos y desempate reales: 4 vecinos en orden fijo N, E, S, O (`gridGraph.ts` CARDINAL_DIRECTIONS, sin diagonales). BFS: cola FIFO. A*: menor f=g+h; empate → menor h; segundo empate → orden de inserción (`search.ts:144-150`). Métricas disponibles en `SearchResult`: `expandedNodes` y `maximumFrontier` existen; ninguna falta.
+Traducción del fixture: `createGridMap(5, 3, [])`, S=(0,1), G=(4,1), costo 1 por celda (`tests/navigation/fixtureBase.test.ts`).
 | Algoritmo | Estado | Ruta | Pasos | Costo | Expandidos | Frontera máxima |
 |---|---|---|---:|---:|---|---|
-| BFS | [DATO] | [DATO] | [DATO] | [DATO] | [DATO O NO DISPONIBLE] | [DATO O NO DISPONIBLE] |
-| A* | [DATO] | [DATO] | [DATO] | [DATO] | [DATO O NO DISPONIBLE] | [DATO O NO DISPONIBLE] |
-DFS: [DOS FRASES SOBRE SU TRAZA Y LÍMITE].
-Dijkstra: [COSTOS COMPLETADOS, RUTA Y CONCLUSIÓN].
+| BFS | success | (0,1)→(1,1)→(2,1)→(3,1)→(4,1) | 4 | 4 | 12 | 4 |
+| A* | success | (0,1)→(1,1)→(2,1)→(3,1)→(4,1) | 4 | 4 | 5 | 9 |
+DFS: con pila e insertando vecinos en orden inverso, DFS sigue S,A,C,X,G y encuentra la meta con cuatro pasos, mientras BFS encuentra S,B,D,G con tres. Encontrar primero la meta no demuestra optimalidad: DFS compromete una rama sin explorar alternativas de igual o menor profundidad; sólo garantiza alcanzabilidad en grafos finitos.
+Dijkstra: Extraer S=0 descubre A=1, B=3. Extraer A=1 descubre G=1+9=**10**. Extraer B=3 mejora G=3+3=**6**. Extraer G (clave 6): ruta **S-B-G**, costo **6**. Conclusión: ambas rutas S-A-G y S-B-G tienen dos acciones, pero costos 10 y 6; BFS cuenta acciones y no distingue costos, Dijkstra sí. No hay que terminar al descubrir G por primera vez porque la clave insertada aún no es mínima; el costo se fija recién al extraer de la cola, y la mejora vía B llega después del descubrimiento inicial.
 
 ## Criterio → evidencia
 | Criterio | Prueba/archivo y comando o reproducción | Observado | Cumple/pendiente |
 |---|---|---|---|
-| BASE-AC1 | [REFERENCIA] | [RESULTADO] | [ESTADO] |
-| BASE-AC2 | [REFERENCIA] | [RESULTADO] | [ESTADO] |
-| BASE-AC3 | [INICIO=META, BARRERA Y EXTREMOS] | [RESULTADOS] | [ESTADO] |
-| BASE-AC4 | [SPEC, PLAN Y DECISIÓN] | [RESULTADO] | [ESTADO] |
+| BASE-AC1 | Commits iniciales/cambios previos arriba; capas en Exploración mínima; `npm run validate` en d6d6b90 (39 tests) y tras fixtureBase (50 tests); supuestos separados en registro | Repositorio/commit/capas/comandos documentados arriba; sin fallos previos | Cumple (revisión humana pendiente) |
+| BASE-AC2 | tests/navigation/fixtureBase.test.ts (ambos algoritmos) + `npm run test:run -- tests/navigation/fixtureBase.test.ts` | BFS y A*: success, ruta cardinal (0,1)→(4,1), 4 pasos, costo 4; expandidos 12/5, frontera 4/9 | Cumple |
+| BASE-AC3 | fixtureBase.test.ts: inicio=meta, barrera (2,0..2), inicio (-1,1), meta (5,1) | success/costo 0; unreachable/costo null; invalid-start; invalid-goal (estados distinguibles) | Cumple |
+| BASE-AC4 | spec.md Estado: Aprobada; decisión humana y contraste arriba; único anexo C | Spec aprobada Paso 3 antes de código; sólo anexo C desarrollado | Cumple (plan pendiente Paso 5) |
 | C-AC1 | [REFERENCIA] | [RESULTADO] | [ESTADO] |
 | C-AC2 | [REFERENCIA] | [RESULTADO] | [ESTADO] |
 | C-AC3 | [PRUEBA DEL CONSUMIDOR] | [RESULTADO] | [ESTADO] |
@@ -44,7 +45,7 @@ Dijkstra: [COSTOS COMPLETADOS, RUTA Y CONCLUSIÓN].
 | BASE-AC6 | [URL, VERSIÓN Y TRES DOCUMENTOS] | [RESULTADO] | [ESTADO] |
 
 ## Registro mínimo de intervención
-Prompts: guía PASOS.md, variante C. Paso 1 (exploración read-only) y prompt orientativo de inicio C (Paso 3) ejecutados; aprobación humana del consumidor registrada arriba. Pendientes: prompt Paso 4 (línea base), Paso 5 (plan), Pasos 6-8.
+Prompts: guía PASOS.md, variante C. Paso 1 (exploración read-only), prompt orientativo de inicio C (Paso 3) y prompt de línea base BASE-01..04 (Paso 4) ejecutados; aprobación humana del consumidor registrada arriba. Pendientes: Paso 5 (plan), Pasos 6-8.
 Decisión tras incremento 1: [ACEPTAR/CORREGIR Y MOTIVO].
 Decisión tras incremento 2: [ACEPTAR/CORREGIR Y MOTIVO].
 Validación final: [COMANDO Y RESULTADO REAL].
