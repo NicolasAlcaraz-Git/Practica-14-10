@@ -19,7 +19,7 @@ Línea base: `npm run validate` en d6d6b90 antes de agregar pruebas → typechec
 Contraste de exploración (Paso 1): en esta copia no existe src/domain/behavior/ (FSM = H4 según README); no se reconstruyó ni se supone su ausencia relevante porque la FSM queda fuera de alcance. LAB_MAP es inmutable y no hay evento de cambio de mapa: el consumidor recalcula sólo ante clic o cambio de algoritmo (GameScene.ts:166). Comandos documentados en package.json:16 (validate) y scripts test/test:run; no se ejecutaron en el Paso 1 por ser sólo lectura.
 
 Contraste y decisión humana: se propuso notificar cambios de mapa y exponer "inaccesible" como capacidades nuevas, pero `calculateRoute` ya acepta el mapa como configuración y el contrato ya distingue `unreachable`; decisión humana (14/10, Paso 3): consumidor = `src/application/simulation/navigationDemo.ts` → `calculateRoute`, reglas de invalidación en dominio puro, coordinación con evento explícito en aplicación, `GameScene` sin cambios, sin dependencias nuevas ni UI.
-Spec/plan aprobados: spec Aprobada el Paso 3 (14/10); plan pendiente (Paso 5).
+Spec/plan aprobados: spec Aprobada el Paso 3 (14/10); plan de 3 incrementos Aprobado el Paso 5 (14/10) — inc1 dominio routeInvalidation, inc2 sesión en navigationDemo + integración, inc3 validación/cierre.
 
 ## Comparación común — fixture libre 5x3
 Vecinos y desempate reales: 4 vecinos en orden fijo N, E, S, O (`gridGraph.ts` CARDINAL_DIRECTIONS, sin diagonales). BFS: cola FIFO. A*: menor f=g+h; empate → menor h; segundo empate → orden de inserción (`search.ts:144-150`). Métricas disponibles en `SearchResult`: `expandedNodes` y `maximumFrontier` existen; ninguna falta.
@@ -45,7 +45,7 @@ Dijkstra: Extraer S=0 descubre A=1, B=3. Extraer A=1 descubre G=1+9=**10**. Extr
 | BASE-AC6 | [URL, VERSIÓN Y TRES DOCUMENTOS] | [RESULTADO] | [ESTADO] |
 
 ## Registro mínimo de intervención
-Prompts: guía PASOS.md, variante C. Paso 1 (exploración read-only), prompt orientativo de inicio C (Paso 3) y prompt de línea base BASE-01..04 (Paso 4) ejecutados; aprobación humana del consumidor registrada arriba. Pendientes: Paso 5 (plan), Pasos 6-8.
+Prompts: guía PASOS.md, variante C. Pasos 1-5 ejecutados (exploración, spec+anexo C, aprobación del consumidor, línea base BASE-01..04 con fixtureBase.test.ts en abe0b4b, plan aprobado). Pendientes: Pasos 6-8 (implementar incrementos 1-3).
 Decisión tras incremento 1: [ACEPTAR/CORREGIR Y MOTIVO].
 Decisión tras incremento 2: [ACEPTAR/CORREGIR Y MOTIVO].
 Validación final: [COMANDO Y RESULTADO REAL].
