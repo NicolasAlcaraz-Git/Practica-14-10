@@ -45,8 +45,8 @@ Dijkstra: Extraer S=0 descubre A=1, B=3. Extraer A=1 descubre G=1+9=**10**. Extr
 | BASE-AC6 | [URL, VERSIÓN Y TRES DOCUMENTOS] | [RESULTADO] | [ESTADO] |
 
 ## Registro mínimo de intervención
-Prompts: guía PASOS.md, variante C. Pasos 1-5 ejecutados (exploración, spec+anexo C, aprobación del consumidor, línea base BASE-01..04 con fixtureBase.test.ts en abe0b4b, plan aprobado). Incremento 1 implementado: `npm run test:run -- tests/navigation/routeInvalidation.test.ts` → 8/8 OK; `npm run validate` → typecheck + 58 tests + build OK (14/10). Archivos: src/domain/navigation/routeInvalidation.ts (nuevo, dominio puro sin Phaser/DOM), tests/navigation/routeInvalidation.test.ts (nuevo). Sin dependencias, sin cambios de implementación previa. Pendientes: aceptación humana del inc1, Pasos 6-8 (inc2 sesión en navigationDemo, inc3 cierre).
-Decisión tras incremento 1: [ACEPTAR/CORREGIR Y MOTIVO].
+Prompts: guía PASOS.md, variante C. Pasos 1-5 ejecutados (exploración, spec+anexo C, aprobación del consumidor, línea base BASE-01..04 con fixtureBase.test.ts en abe0b4b, plan aprobado). Incremento 1 aceptado: routeInvalidation.ts (8 tests, validate 58 OK). Incremento 2 implementado: sesión de navegación en navigationDemo.ts (initialNavigationState/updateNavigationSession/advanceToCell/notifyMapChanged; búsqueda inyectable NavigationSearch, default calculateRoute) + tests/application/navigationSession.test.ts → foco 5/5 OK; `npm run validate` → typecheck + 63 tests + build OK (14/10). Conteo de búsquedas instrumentado sólo en la prueba (double countingSearch); sin telemetría en el juego; GameScene y FSM intactos; sin dependencias. Pendientes: aceptación humana del inc2, inc3 (cierre).
+Decisión tras incremento 1: ACEPTAR — regla pura de invalidación + recálculo por calculateRoute verifican C-AC1 (6 pasos/costo 6, barrera unreachable, recuperación 4/4); foco 8/8 y validate 58 tests OK (14/10).
 Decisión tras incremento 2: [ACEPTAR/CORREGIR Y MOTIVO].
 Validación final: [COMANDO Y RESULTADO REAL].
 Diff revisado: [ARCHIVOS Y ALCANCE].
